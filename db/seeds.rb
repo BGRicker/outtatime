@@ -10,4 +10,6 @@
   Post.create!(date: Date.today, rationale: "#{post} rationale content")
 end
 
+User.create!(first_name: "Guy", last_name: "Fieri", email: "guy@fieri.com", password: "asdasd", password_confirmation: "asdasd")
+
 puts "100 posts have been created"

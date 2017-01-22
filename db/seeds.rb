@@ -6,10 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-100.times do |post|
-  Post.create!(date: Date.today, rationale: "#{post} rationale content")
+@user = User.create!(first_name: "Guy", last_name: "Fieri", email: "guy@fieri.com", password: "asdasd", password_confirmation: "asdasd")
+
+10.times do |post|
+  Post.create!(date: Date.today, rationale: "#{post} rationale content", user_id: @user.id)
 end
 
-User.create!(first_name: "Guy", last_name: "Fieri", email: "guy@fieri.com", password: "asdasd", password_confirmation: "asdasd")
 
 puts "100 posts have been created"

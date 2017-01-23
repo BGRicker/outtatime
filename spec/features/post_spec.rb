@@ -7,20 +7,20 @@ describe 'navigate' do
     login_as(@user, :scope => :user)
   end
 
-	describe 'index' do
-		before do
-			visit new_post_path
-		end
+  describe 'index' do
+    before do
+      visit new_post_path
+    end
 
-		it 'can be reached successfully' do
-			expect(page.status_code).to eq(200)
-		end
+    it 'can be reached successfully' do
+      expect(page.status_code).to eq(200)
+    end
 
-		it 'requires a login' do
+    it 'requires a login' do
       logout
-			visit root_path
-			expect(page).to have_content(/Log in/ && /Sign up/)
-		end
+      visit root_path
+      expect(page).to have_content(/Log in/ && /Sign up/)
+    end
 
     it 'has a list of posts' do
       post1 = FactoryGirl.create(:post)
@@ -28,42 +28,52 @@ describe 'navigate' do
       visit posts_path
       expect(page).to have_content(/human torch|Rick Ross/)
     end
+  end
 
-    describe 'new' do
-      it 'has a link from the home page' do
-        visit root_path
+  describe 'new' do
+    it 'has a link from the home page' do
+      visit root_path
 
-        click_link ("new_post_from_nav")
-        expect(page.status_code).to eq(200)
-      end
+      click_link ("new_post_from_nav")
+      expect(page.status_code).to eq(200)
     end
   end
 
-	describe 'creation' do
-		before do
-			visit new_post_path
-		end
+  describe 'delete' do
+    it 'can be deleted' do
+      @post = FactoryGirl.create(:post)
+      visit posts_path
 
-		it 'has a new form that can be reached' do
-			expect(page.status_code).to eq(200)
-		end
+      click_link ("delete_post_#{@post.id}_from_index")
+      expect(page.status_code).to eq(200)
+    end
+  end
 
-		it 'can be created from new form page' do
-			fill_in 'post[date]', with: Date.today
-			fill_in 'post[rationale]', with: "Flavorsquad"
-			click_on "Save"
+  describe 'creation' do
+    before do
+      visit new_post_path
+    end
 
-			expect(page).to have_content("Flavorsquad")
-		end
+    it 'has a new form that can be reached' do
+      expect(page.status_code).to eq(200)
+    end
 
-		it 'will have a user associated it' do
-			fill_in 'post[date]', with: Date.today
-			fill_in 'post[rationale]', with: "did you hear about all the bees"
-			click_on "Save"
+    it 'can be created from new form page' do
+      fill_in 'post[date]', with: Date.today
+      fill_in 'post[rationale]', with: "Flavorsquad"
+      click_on "Save"
 
-			expect(User.last.posts.last.rationale).to eq("did you hear about all the bees")
-		end
-	end
+      expect(page).to have_content("Flavorsquad")
+    end
+
+    it 'will have a user associated it' do
+      fill_in 'post[date]', with: Date.today
+      fill_in 'post[rationale]', with: "did you hear about all the bees"
+      click_on "Save"
+
+      expect(User.last.posts.last.rationale).to eq("did you hear about all the bees")
+    end
+  end
 
   describe 'edit' do
     before do
@@ -80,9 +90,9 @@ describe 'navigate' do
       visit edit_post_path(@post)
       expect(page.status_code).to eq(200)
 
-			fill_in 'post[date]', with: Date.today
-			fill_in 'post[rationale]', with: "did you hear about all the bees"
-			click_on "Save"
+      fill_in 'post[date]', with: Date.today
+      fill_in 'post[rationale]', with: "did you hear about all the bees"
+      click_on "Save"
     end
   end
 end

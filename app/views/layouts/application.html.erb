@@ -16,6 +16,7 @@
 					<%= yield %>
 				</div>
 			</div>
-		</div>
-	</body>
+    </div>
+    <%= js add_gritter(flash[:notice], title: "Outta Time 😎 Notification", sticky: false) %>
+  </body>
 </html>

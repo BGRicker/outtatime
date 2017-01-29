@@ -19,7 +19,7 @@ describe 'navigate' do
     it 'requires a login' do
       logout
       visit root_path
-      expect(page).to have_content(/Log in/ && /Sign up/)
+      expect(page).to have_content(/Log in/)
     end
 
     it 'has a list of posts' do
